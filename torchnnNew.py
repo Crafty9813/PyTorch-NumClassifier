@@ -11,7 +11,9 @@ from torchvision.transforms import ToTensor
 # Number MNIST dataset
 train = datasets.MNIST(root="data", download=True, train=True, transform=ToTensor())
 dataset = DataLoader(train, 32)
-# 1,28,28 - classes 0-9
+# MNIST imgs are 28x28 px
+
+# after each convolution, 2 px are removed from the original img?
 
 
 # Image Classifier
@@ -43,8 +45,8 @@ if __name__ == "__main__":
         for batch in dataset:
             X, y = batch
             X, y = X.to("mps"), y.to("mps")
-            yhat = classifier(X)
-            loss = loss_func(yhat, y)
+            yPred = classifier(X)
+            loss = loss_func(yPred, y)
 
             # Backpropagation
             opt.zero_grad()
