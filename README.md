@@ -1,2 +1,3 @@
-# PyTorchLearning
-Personal repo for me to learn PyTorch in depth from the basics
+# PyTorch number classifier using MNIST dataset
+
+followed tutorial online.
