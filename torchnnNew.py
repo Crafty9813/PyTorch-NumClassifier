@@ -27,7 +27,7 @@ class ImageClassifier(nn.Module):
             nn.Conv2d(64, 64, (3, 3)), # 3x3 kernel, h,w = 22x22
             nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(64 * (22) * (22), 10),
+            nn.Linear(64 * (22) * (22), 10), # 1d tensor of 30976 features
         )
 
     def forward(self, x):
