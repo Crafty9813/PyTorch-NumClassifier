@@ -10,22 +10,21 @@ from torchvision.transforms import ToTensor
 
 # Number MNIST dataset
 train = datasets.MNIST(root="data", download=True, train=True, transform=ToTensor())
-dataset = DataLoader(train, 32)
+dataset = DataLoader(train, 32) # Batch size = 32 imgs
 # MNIST imgs are 28x28 px
 
-# after each convolution, 2 px are removed from the original img?
-
+# After each convolution, 2 px are removed from the original img?
 
 # Image Classifier
 class ImageClassifier(nn.Module):
     def __init__(self):
         super().__init__()
         self.model = nn.Sequential(
-            nn.Conv2d(1, 32, (3, 3)),
+            nn.Conv2d(1, 32, (3, 3)), # 3x3 kernel, h,w = 26x26
             nn.ReLU(),
-            nn.Conv2d(32, 64, (3, 3)),
+            nn.Conv2d(32, 64, (3, 3)), # 3x3 kernel, h,w = 24x24
             nn.ReLU(),
-            nn.Conv2d(64, 64, (3, 3)),
+            nn.Conv2d(64, 64, (3, 3)), # 3x3 kernel, h,w = 22x22
             nn.ReLU(),
             nn.Flatten(),
             nn.Linear(64 * (22) * (22), 10),
