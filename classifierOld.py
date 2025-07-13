@@ -7,6 +7,7 @@ from torch.optim import Adam
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
+import numpy as np
 
 # Number MNIST dataset
 train = datasets.MNIST(root="data", download=True, train=True, transform=ToTensor())
@@ -34,7 +35,7 @@ class ImageClassifier(nn.Module):
         return self.model(x)
 
 
-classifier = ImageClassifier().to("mps")
+classifier = ImageClassifier().to("cpu")
 opt = Adam(classifier.parameters(), lr=1e-2)
 loss_func = nn.CrossEntropyLoss()
 
@@ -43,7 +44,7 @@ if __name__ == "__main__":
     for epoch in range(5):  # Train for 5 epochs
         for batch in dataset:
             X, y = batch
-            X, y = X.to("mps"), y.to("mps")
+            X, y = X.to("cpu"), y.to("cpu")
             yPred = classifier(X)
             loss = loss_func(yPred, y)
 
@@ -61,6 +62,6 @@ if __name__ == "__main__":
         classifier.load_state_dict(load(f))
 
         img = Image.open("nums/two.jpg")
-        img_tensor = ToTensor()(img).unsqueeze(0).to("mps")
+        img_tensor = ToTensor()(img).unsqueeze(0).to("cpu")
 
         print(torch.argmax(classifier(img_tensor)))
